@@ -508,19 +508,19 @@ int main(int argc, char** argv) {
 		  main_single_patch(patch_width, patch_height, tpatchDevRgbU, &tpatchDevGPb, &tpatchDevGPball, &tpatchDevMPb, tpatchMatrixPitchInFloats, nTextonChoice, nEigNum, fEigTolerance);
 		  // copy data out
 		  uint patchLineInnerSizeFloat = sizeof(float) * patch_width_inner;
-		  for ( int ik=0; ik<patch_height; ++ ik ) {
+		  for ( int ik=0; ik<seg_height; ++ ik ) {
 		    float* ptarget = &(devGPb[(ik+ystart)*width+xstart]);
 		    float* psource = &(tpatchDevGPb[(ik+top_pad)*patch_width+left_pad]);
 		    cudaMemcpy(ptarget, psource, patchLineInnerSizeFloat, cudaMemcpyDeviceToDevice);
 		  }
 		  for ( int jj=0; jj<8; ++ jj ) {
-			for ( int ik=0; ik<patch_height; ++ ik ) {
+			for ( int ik=0; ik<seg_height; ++ ik ) {
 		      float* ptarget = &(devGPball[jj*matrixPitchInFloats + (ik+ystart)*width+xstart]);
 			  float* psource = &(tpatchDevGPball[jj*tpatchMatrixPitchInFloats + (ik+top_pad)*patch_width+left_pad]);
 			  cudaMemcpy(ptarget, psource, patchLineInnerSizeFloat, cudaMemcpyDeviceToDevice);
 			}
 		  }
-		  for ( int ik=0; ik<patch_height; ++ ik ) {
+		  for ( int ik=0; ik<seg_height; ++ ik ) {
 		    float* ptarget = &(devMPb[(ik+ystart)*width+xstart]);
 		    float* psource = &(tpatchDevMPb[(ik+top_pad)*patch_width+left_pad]);
 		    cudaMemcpy(ptarget, psource, patchLineInnerSizeFloat, cudaMemcpyDeviceToDevice);
